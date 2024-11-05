@@ -36,6 +36,24 @@ export const BrowserContent = ({
     window.addEventListener("load", () => setIsLoading(false), { once: true });
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const inputUrl = (
+      e.currentTarget.elements.namedItem("urlInput") as HTMLInputElement
+    ).value;
+    const isValidUrl =
+      inputUrl.startsWith("http://") || inputUrl.startsWith("https://");
+    const newUrl = isValidUrl
+      ? inputUrl
+      : `https://search.brave.com/search?q=${encodeURIComponent(inputUrl)}`;
+
+    const newTabs = tabs.map((tab) =>
+      tab.id === activeTab ? { ...tab, url: newUrl } : tab
+    );
+    setTabs(newTabs);
+    setIframeUrl(newUrl);
+  };
+
   return (
     <div className="flex-1 flex flex-col bg-background dark:bg-gray-950">
       {isUIVisible && (
@@ -60,21 +78,18 @@ export const BrowserContent = ({
             />
           </Button>
 
-          <div className="flex-1 flex items-center bg-muted rounded-lg px-3 py-1.5">
+          <form
+            onSubmit={handleSubmit}
+            className="flex-1 flex items-center bg-muted rounded-lg px-3 py-1.5"
+          >
             <Search className="w-4 h-4 text-muted-foreground mr-2" />
             <input
               type="text"
-              value={tabs.find((tab) => tab.id === activeTab)?.url}
-              onChange={(e) => {
-                const newTabs = tabs.map((tab) =>
-                  tab.id === activeTab ? { ...tab, url: e.target.value } : tab
-                );
-                setTabs(newTabs);
-                setIframeUrl(e.target.value);
-              }}
+              name="urlInput"
+              defaultValue={tabs.find((tab) => tab.id === activeTab)?.url}
               className="flex-1 bg-transparent border-none focus:outline-none text-sm"
             />
-          </div>
+          </form>
         </div>
       )}
 
