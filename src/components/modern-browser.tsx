@@ -37,6 +37,10 @@ import { ComponentPlaceholderIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
+const MIN_SIDEBAR_WIDTH = 240;
+const MAX_SIDEBAR_WIDTH = 480;
+const HOME_PAGE = "https://zen-browser.app/";
+
 interface Tab {
   id: string;
   title: string;
@@ -47,8 +51,8 @@ interface Tab {
 const initialTabs: Tab[] = [
   {
     id: "1",
-    title: "Home",
-    url: "https://browser.example.com",
+    title: "Zen Browser",
+    url: HOME_PAGE,
   },
   {
     id: "2",
@@ -66,9 +70,6 @@ const initialTabs: Tab[] = [
     url: "https://github.com",
   },
 ];
-
-const MIN_SIDEBAR_WIDTH = 240;
-const MAX_SIDEBAR_WIDTH = 480;
 
 export function ModernBrowser() {
   const [tabs, setTabs] = useState<Tab[]>(initialTabs);
