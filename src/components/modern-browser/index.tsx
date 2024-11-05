@@ -22,11 +22,7 @@ export const ModernBrowser = () => {
       },
       {
         id: "3",
-        title: "YouTube - Vespera",
-        url: "https://youtube.com/watch?v=456",
-      },
-      {
-        id: "4",
+
         title: "TutoriaLLM",
         url: "https://demo.tutoriallm.com/",
       },
