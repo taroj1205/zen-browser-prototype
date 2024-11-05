@@ -80,6 +80,7 @@ export function ModernBrowser() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
   const [sidebarWidth, setSidebarWidth] = useState(320);
   const [isResizing, setIsResizing] = useState(false);
+  const [iframeUrl, setIframeUrl] = useState(HOME_PAGE);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -100,6 +101,7 @@ export function ModernBrowser() {
     };
     setTabs([...tabs, newTab]);
     setActiveTab(newTab.id);
+    setIframeUrl(newTab.url);
   };
 
   const handleCloseTab = (tabId: string, e: React.MouseEvent) => {
@@ -110,13 +112,16 @@ export function ModernBrowser() {
     const newTabs = tabs.filter((tab) => tab.id !== tabId);
     setTabs(newTabs);
     if (activeTab === tabId) {
-      setActiveTab(newTabs[newTabs.length - 1].id);
+      const newActiveTab = newTabs[newTabs.length - 1];
+      setActiveTab(newActiveTab.id);
+      setIframeUrl(newActiveTab.url);
     }
   };
 
   const handleReload = () => {
     setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 1000);
+    window.location.reload();
+    window.addEventListener("load", () => setIsLoading(false), { once: true });
   };
 
   const toggleTheme = () => {
@@ -157,6 +162,13 @@ export function ModernBrowser() {
       document.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isResizing, handleMouseMove, handleMouseUp]);
+
+  useEffect(() => {
+    const activeTabData = tabs.find((tab) => tab.id === activeTab);
+    if (activeTabData) {
+      setIframeUrl(activeTabData.url);
+    }
+  }, [activeTab, tabs]);
 
   return (
     <div className={`flex h-screen ${isDark ? "dark" : ""}`}>
@@ -454,6 +466,7 @@ export function ModernBrowser() {
                     tab.id === activeTab ? { ...tab, url: e.target.value } : tab
                   );
                   setTabs(newTabs);
+                  setIframeUrl(e.target.value);
                 }}
                 className="flex-1 bg-transparent border-none focus:outline-none text-sm"
               />
@@ -462,31 +475,7 @@ export function ModernBrowser() {
         )}
 
         {/* Browser Content */}
-        {/* <div className="flex-1 p-8">
-          <div className="max-w-2xl mx-auto text-center">
-            <h1 className="text-4xl font-bold mb-4">
-              The browser made for you,
-              <br />
-              not your data.
-            </h1>
-            <p className="text-lg text-muted-foreground mb-8">
-              Beautifully designed, privacy-focused, and packed with features.
-              <br />
-              We care about your experience, not your data.
-            </p>
-            <p className="text-sm text-muted-foreground mb-4">
-              Press Ctrl+C to toggle UI visibility
-            </p>
-            <Button size="lg" className="rounded-full">
-              Download Now
-            </Button>
-          </div>
-        </div> */}
-        <iframe
-          title="browser"
-          src="https://zen-browser.app/"
-          className="flex-1"
-        />
+        <iframe title="browser" src={iframeUrl} className="flex-1" />
       </div>
     </div>
   );
