@@ -461,7 +461,7 @@ export function ModernBrowser() {
         )}
 
         {/* Browser Content */}
-        <div className="flex-1 p-8">
+        {/* <div className="flex-1 p-8">
           <div className="max-w-2xl mx-auto text-center">
             <h1 className="text-4xl font-bold mb-4">
               The browser made for you,
@@ -480,7 +480,12 @@ export function ModernBrowser() {
               Download Now
             </Button>
           </div>
-        </div>
+        </div> */}
+        <iframe
+          title="browser"
+          src="https://tr6dnof6iut6iknflu.b-cdn.net/"
+          className="flex-1"
+        />
       </div>
     </div>
   );
