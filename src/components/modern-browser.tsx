@@ -12,7 +12,6 @@ import {
   Menu,
   Search,
   Youtube,
-  Github,
   Instagram,
   Linkedin,
   MessageCircle,
@@ -34,6 +33,9 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import Image from "next/image";
+import { ComponentPlaceholderIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface Tab {
   id: string;
@@ -47,25 +49,21 @@ const initialTabs: Tab[] = [
     id: "1",
     title: "Home",
     url: "https://browser.example.com",
-    icon: "/placeholder.svg?height=16&width=16",
   },
   {
     id: "2",
     title: "YouTube - LINARIA",
     url: "https://youtube.com/watch?v=123",
-    icon: "/placeholder.svg?height=16&width=16",
   },
   {
     id: "3",
     title: "YouTube - Vespera",
     url: "https://youtube.com/watch?v=456",
-    icon: "/placeholder.svg?height=16&width=16",
   },
   {
     id: "4",
     title: "GitHub",
     url: "https://github.com",
-    icon: "/placeholder.svg?height=16&width=16",
   },
 ];
 
@@ -164,6 +162,7 @@ export function ModernBrowser() {
       {/* Sidebar Toggle Button - Visible on Mobile */}
       {!isUIVisible && (
         <button
+          type="button"
           onClick={() => setIsUIVisible(true)}
           className="fixed top-4 left-4 z-50 bg-background/50 backdrop-blur-sm p-2 rounded-full"
         >
@@ -208,121 +207,198 @@ export function ModernBrowser() {
               </>
             )}
           </div>
-
-          {/* Shortcuts Grid */}
-          {isSidebarExpanded && (
-            <div className="grid grid-cols-4 gap-2 p-2">
-              <Button variant="secondary" size="icon" className="w-full h-10">
-                <Instagram className="w-4 h-4" />
-              </Button>
-              <Button variant="secondary" size="icon" className="w-full h-10">
-                <Youtube className="w-4 h-4" />
-              </Button>
-              <Button variant="secondary" size="icon" className="w-full h-10">
-                <MessageCircle className="w-4 h-4" />
-              </Button>
-              <Button variant="secondary" size="icon" className="w-full h-10">
-                <Linkedin className="w-4 h-4" />
-              </Button>
-              <Button variant="secondary" size="icon" className="w-full h-10">
-                <Twitter className="w-4 h-4" />
-              </Button>
-              <Button variant="secondary" size="icon" className="w-full h-10">
-                <Twitch className="w-4 h-4" />
-              </Button>
-              <Button variant="secondary" size="icon" className="w-full h-10">
-                <Facebook className="w-4 h-4" />
-              </Button>
-              <Button variant="secondary" size="icon" className="w-full h-10">
-                <Chrome className="w-4 h-4" />
-              </Button>
+          <ScrollArea className="flex-1">
+            {/* Shortcuts Grid */}
+            <div
+              className={`grid gap-2 p-2 ${
+                isSidebarExpanded ? "grid-cols-4" : "grid-cols-1"
+              }`}
+            >
+              <Link
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="secondary" size="icon" className="w-full h-10">
+                  <Instagram className="w-4 h-4" />
+                  <span className="sr-only">Instagram</span>
+                </Button>
+              </Link>
+              <Link
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="secondary" size="icon" className="w-full h-10">
+                  <Youtube className="w-4 h-4" />
+                  <span className="sr-only">YouTube</span>
+                </Button>
+              </Link>
+              <Link
+                href="https://messenger.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="secondary" size="icon" className="w-full h-10">
+                  <MessageCircle className="w-4 h-4" />
+                  <span className="sr-only">Messenger</span>
+                </Button>
+              </Link>
+              <Link
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="secondary" size="icon" className="w-full h-10">
+                  <Linkedin className="w-4 h-4" />
+                  <span className="sr-only">LinkedIn</span>
+                </Button>
+              </Link>
+              <Link
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="secondary" size="icon" className="w-full h-10">
+                  <Twitter className="w-4 h-4" />
+                  <span className="sr-only">Twitter</span>
+                </Button>
+              </Link>
+              <Link
+                href="https://twitch.tv"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="secondary" size="icon" className="w-full h-10">
+                  <Twitch className="w-4 h-4" />
+                  <span className="sr-only">Twitch</span>
+                </Button>
+              </Link>
+              <Link
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="secondary" size="icon" className="w-full h-10">
+                  <Facebook className="w-4 h-4" />
+                  <span className="sr-only">Facebook</span>
+                </Button>
+              </Link>
+              <Link
+                href="https://chrome.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="secondary" size="icon" className="w-full h-10">
+                  <Chrome className="w-4 h-4" />
+                  <span className="sr-only">Chrome</span>
+                </Button>
+              </Link>
             </div>
-          )}
 
-          <ScrollArea className="flex-1 px-2">
-            {/* Collapsible Sections */}
-            <div className="space-y-2">
-              <Collapsible defaultOpen>
-                <CollapsibleTrigger className="flex items-center w-full p-2 text-sm hover:bg-white/50 dark:hover:bg-gray-800 rounded-lg">
-                  <Music2 className="w-4 h-4 mr-2" />
-                  {isSidebarExpanded && "Music"}
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="ml-4 space-y-1">
-                    {tabs
-                      .filter((tab) => tab.title.includes("YouTube"))
-                      .map((tab) => (
-                        <button
+            <div className="flex-1 px-2">
+              {/* Collapsible Sections */}
+              <div className="space-y-2">
+                <Collapsible defaultOpen>
+                  <CollapsibleTrigger className="flex items-center w-full p-2 text-sm hover:bg-white/50 dark:hover:bg-gray-800 rounded-lg">
+                    <Music2 className="w-4 h-4 mr-2" />
+                    {isSidebarExpanded && "Music"}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="ml-4 space-y-1">
+                      {tabs
+                        .filter((tab) => tab.title.includes("YouTube"))
+                        .map((tab) => (
+                          <button
+                            key={tab.id}
+                            type="button"
+                            onClick={() => setActiveTab(tab.id)}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-white/50 dark:hover:bg-gray-800"
+                          >
+                            <Youtube className="w-4 h-4 text-red-500" />
+                            {isSidebarExpanded && tab.title}
+                          </button>
+                        ))}
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                <Collapsible defaultOpen>
+                  <CollapsibleTrigger className="flex items-center w-full p-2 text-sm hover:bg-white/50 dark:hover:bg-gray-800 rounded-lg">
+                    <BookMarked className="w-4 h-4 mr-2" />
+                    {isSidebarExpanded && "Bookmarks"}
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="ml-4 space-y-1">
+                      {tabs.map((tab) => (
+                        <div
                           key={tab.id}
                           onClick={() => setActiveTab(tab.id)}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg hover:bg-white/50 dark:hover:bg-gray-800"
+                          onKeyUp={(e) => e.key === " " && setActiveTab(tab.id)}
+                          onKeyDown={(e) =>
+                            e.key === " " && setActiveTab(tab.id)
+                          }
+                          onTouchStart={() => setActiveTab(tab.id)}
+                          className={`w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg group hover:bg-white/50 dark:hover:bg-gray-800 cursor-pointer ${
+                            activeTab === tab.id
+                              ? "bg-white/60 dark:bg-gray-800"
+                              : ""
+                          }`}
                         >
-                          <Youtube className="w-4 h-4 text-red-500" />
-                          {isSidebarExpanded && tab.title}
-                        </button>
+                          {tab.icon ? (
+                            <Image
+                              src={tab.icon}
+                              alt=""
+                              width={16}
+                              height={16}
+                              className="w-4 h-4"
+                            />
+                          ) : (
+                            <ComponentPlaceholderIcon className="w-4 h-4 text-gray-500" />
+                          )}
+                          {isSidebarExpanded && (
+                            <>
+                              <span className="flex-1 text-left truncate">
+                                {tab.title}
+                              </span>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="w-6 h-6 opacity-0 group-hover:opacity-100"
+                                onClick={(e) => handleCloseTab(tab.id, e)}
+                              >
+                                <X className="w-3 h-3" />
+                              </Button>
+                            </>
+                          )}
+                        </div>
                       ))}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-
-              <Collapsible defaultOpen>
-                <CollapsibleTrigger className="flex items-center w-full p-2 text-sm hover:bg-white/50 dark:hover:bg-gray-800 rounded-lg">
-                  <BookMarked className="w-4 h-4 mr-2" />
-                  {isSidebarExpanded && "Bookmarks"}
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <div className="ml-4 space-y-1">
-                    {tabs.map((tab) => (
-                      <div
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id)}
-                        className={`w-full flex items-center gap-2 px-3 py-2 text-sm rounded-lg group hover:bg-white/50 dark:hover:bg-gray-800 cursor-pointer ${
-                          activeTab === tab.id
-                            ? "bg-white/60 dark:bg-gray-800"
-                            : ""
-                        }`}
-                      >
-                        <Image
-                          src={tab.icon}
-                          alt=""
-                          width={16}
-                          height={16}
-                          className="w-4 h-4"
-                        />
-                        {isSidebarExpanded && (
-                          <>
-                            <span className="flex-1 text-left truncate">
-                              {tab.title}
-                            </span>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="w-6 h-6 opacity-0 group-hover:opacity-100"
-                              onClick={(e) => handleCloseTab(tab.id, e)}
-                            >
-                              <X className="w-3 h-3" />
-                            </Button>
-                          </>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+              </div>
             </div>
           </ScrollArea>
-
           {/* Bottom Actions */}
-          <div className="p-2 grid grid-cols-4 gap-2 border-t dark:border-gray-800">
-            <Button variant="ghost" size="icon" className="aspect-square">
-              <Home className="w-4 h-4" />
-            </Button>
-            <Button variant="ghost" size="icon" className="aspect-square">
-              <Download className="w-4 h-4" />
-            </Button>
-            <Button variant="ghost" size="icon" className="aspect-square">
-              <Share2 className="w-4 h-4" />
-            </Button>
+          <div
+            className={cn(
+              "p-2 grid gap-2 border-t dark:border-gray-800 place-items-center",
+              isSidebarExpanded ? "grid-cols-4" : "grid-cols-1"
+            )}
+          >
+            {isSidebarExpanded ? (
+              <>
+                <Button variant="ghost" size="icon" className="aspect-square">
+                  <Home className="w-4 h-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="aspect-square">
+                  <Download className="w-4 h-4" />
+                </Button>
+                <Button variant="ghost" size="icon" className="aspect-square">
+                  <Share2 className="w-4 h-4" />
+                </Button>
+              </>
+            ) : null}
             <Button
               variant="ghost"
               size="icon"
