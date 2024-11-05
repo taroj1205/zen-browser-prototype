@@ -483,7 +483,7 @@ export function ModernBrowser() {
         </div> */}
         <iframe
           title="browser"
-          src="https://tr6dnof6iut6iknflu.b-cdn.net/"
+          src="https://zen-browser.app/"
           className="flex-1"
         />
       </div>
