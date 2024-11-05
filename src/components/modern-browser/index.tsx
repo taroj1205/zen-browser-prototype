@@ -17,8 +17,8 @@ export const ModernBrowser = () => {
       },
       {
         id: "2",
-        title: "YouTube - LINARIA",
-        url: "https://youtube.com/watch?v=123",
+        title: "taroj1205 - Portfolio",
+        url: "https://taroj.pages.dev/",
       },
       {
         id: "3",
@@ -27,8 +27,8 @@ export const ModernBrowser = () => {
       },
       {
         id: "4",
-        title: "GitHub",
-        url: "https://github.com",
+        title: "TutoriaLLM",
+        url: "https://demo.tutoriallm.com/",
       },
     ],
     []
